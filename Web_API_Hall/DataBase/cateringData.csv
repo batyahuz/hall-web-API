@@ -1,0 +1,6 @@
+Id,Name,FoodType,PriceForPlate
+1,"משמחים",FOOD_TYPE.PARVE|FOOD_TYPE.DAIRY,70
+2,"הכי טעים בעיר",FOOD_TYPE.FLASHIC,50
+3,"בתאבון",FOOD_TYPE.PARVE,150
+4,"מנוחה ושמחה",FOOD_TYPE.DAIRY,10
+

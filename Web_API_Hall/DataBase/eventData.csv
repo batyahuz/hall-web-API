@@ -1,0 +1,8 @@
+Id,Date,StartTime,EndTime,Kind,Catering,Customer,Comments,AmountOfPortions
+1,11/11/2023,TIME.MORNING,EVENT_KIND.BRIT,1,2,"a comment",40
+2,11/10/2023,TIME.NOON,EVENT_KIND.BAR_MITZVA,2,2,"a comment",50
+3,11/20/2023,TIME.EVENING,EVENT_KIND.WEDDING,4,3,"a comment",300
+4,11/10/2023,TIME.NOON,EVENT_KIND.BAR_MITZVA,3,1,"a comment",100
+
+
+
