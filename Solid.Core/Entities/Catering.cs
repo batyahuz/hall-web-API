@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace Web_API_Hall.Entities
+namespace Solid.Core.Entities
 {
     public enum FOOD_TYPE { DAIRY, FLASHIC, PARVE };
     public class Catering
@@ -30,6 +30,11 @@ namespace Web_API_Hall.Entities
             this.Name = value.Name;
             this.FoodType = value.FoodType;
             this.PriceForPlate = value.PriceForPlate;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj != null && obj.GetType() != this.GetType() && Id == ((Catering)obj).Id;
         }
     }
 }

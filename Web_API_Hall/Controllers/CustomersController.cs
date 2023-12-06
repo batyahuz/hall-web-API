@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Solid.Core.Entities;
+using Solid.Data;
 using Web_API_Hall;
-using Web_API_Hall.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

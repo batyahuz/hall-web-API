@@ -1,9 +1,9 @@
 ﻿//using CsvHelper;
+using Solid.Core.Entities;
 using System.Formats.Asn1;
 using System.Globalization;
-using Web_API_Hall.Entities;
 
-namespace Web_API_Hall
+namespace Solid.Data
 {
     public class DataContext
     {

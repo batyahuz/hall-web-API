@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace Web_API_Hall.Entities
+namespace Solid.Core.Entities
 {
     public enum EVENT_KIND { OTHER = 1, BRIT, SHEVA_BRACHOS, BAR_MITZVA, WEDDING };
     public enum EVENT_TIME { MORNING = 1, NOON, AFTER_NOON, EVENING };

@@ -1,47 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Web_API_Hall.Entities;
+using Solid.Core.Entities;
+using Solid.Core.Service;
+using Solid.Data;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace Web_API_Hall.Controllers
+namespace Solid.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CateringsController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly ICateringService _context;
 
-        public CateringsController(DataContext context)
+        public CateringsController(ICateringService contextService)
         {
-            _context = context;
+            _context = contextService;
         }
 
         // GET: api/<CateringsController>
         [HttpGet]
         public IActionResult Get()
         {
-            if (_context.Caterings.Count == 0)
-                return NoContent();
-            return Ok(_context.Caterings);
+            var res = _context.GetAllCaterings();
+            return res == null ? NoContent() : Ok(res);
         }
 
         // GET api/<CateringsController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            if (_context.Caterings.Count == 0)
-                return NoContent();
-            var c = _context.Caterings.Find(c => c.Id == id);
-            if (c == null)
-                return NoContent();
-            return Ok(c);
+            var res = _context.GetCateringById(id);
+            return res == null ? NoContent() : Ok(res);
         }
 
         // POST api/<CateringsController>
         [HttpPost]
         public IActionResult Post([FromBody] Catering value)
         {
-            _context.Caterings.Add(new Catering(value));
+            _context.AddCatering(new Catering(value));
             return NoContent();
         }
 
@@ -49,24 +44,17 @@ namespace Web_API_Hall.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Catering value)
         {
-            var c = _context.Caterings.Find(c => c.Id == id);
-            if (c == null)
-            {
-                _context.Caterings.Add(value);
-                return NotFound();
-            }
-            _context.Caterings.Remove(c);
-            _context.Caterings.Add(value);
-            return Ok(value);
+            var c = _context.GetCateringById(id);
+            _context.UpdateCateringById(c, new Catering(value));
+            return c == null ? NoContent() : Ok(value);
         }
 
         // DELETE api/<CateringsController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if (_context.Caterings.Count == 0)
-                return NotFound();
-            var c = _context.Caterings.Find(c => c.Id == id);
+            var c = _context.GetCateringById(id);
+            _context.RemoveCatering(c.FirstOrDefault);
             if (c == null)
                 return NotFound();
             _context.Caterings.Remove(c);

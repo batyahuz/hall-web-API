@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Xml.Linq;
 
-namespace Web_API_Hall.Entities
+namespace Solid.Core.Entities
 {
     public class Customer
     {
