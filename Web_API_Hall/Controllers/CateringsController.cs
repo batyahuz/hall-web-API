@@ -36,7 +36,7 @@ namespace Solid.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Catering value)
         {
-            _context.AddCatering(new Catering(value));
+            _context.AddCatering(value);
             return NoContent();
         }
 
@@ -44,21 +44,14 @@ namespace Solid.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Catering value)
         {
-            var c = _context.GetCateringById(id);
-            _context.UpdateCateringById(c, new Catering(value));
-            return c == null ? NoContent() : Ok(value);
+            return _context.UpdateCateringById(id, value) ? Ok(value) : NoContent();
         }
 
         // DELETE api/<CateringsController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var c = _context.GetCateringById(id);
-            _context.RemoveCatering(c.FirstOrDefault);
-            if (c == null)
-                return NotFound();
-            _context.Caterings.Remove(c);
-            return NoContent();
+            return _context.RemoveCateringById(id) ? NoContent() : NotFound();
         }
     }
 }

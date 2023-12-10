@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Solid.Core.Entities;
+using Solid.Core.Service;
 using Solid.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,16 +11,14 @@ namespace Web_API_Hall.Controllers
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IEventService _context;
 
-        public EventsController(DataContext context)
+        public EventsController(IEventService context)
         {
             _context = context;
         }
 
-
-        /*
-           -שליפת רשימת הארועים
+        /*  -שליפת רשימת הארועים
             GET   https://golden_hall.co.il/events
                -שליפת ארוע ע"פ מזהה
             GET  https://golden_hall.co.il/events/id
@@ -28,35 +27,29 @@ namespace Web_API_Hall.Controllers
             -עדכון ארוע לפי מזהה
             PUT  https://golden_hall.co.il/events/id
              מחיקת ארוע לפי מזהה
-            DELETE https://golden_hall.co.il/events/id
-         */
+            DELETE https://golden_hall.co.il/events/id */
 
         // GET: api/<EventsController>
         [HttpGet]
         public IActionResult Get()
         {
-            if (_context.Events.Count == 0)
-                return NotFound();
-            return Ok(_context.Events);
+            var res = _context.GetAllEvents();
+            return res == null ? NoContent() : Ok(res);
         }
 
         // GET api/<EventsController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            if (_context.Events.Count == 0)
-                return NoContent();
-            var e = _context.Events.Find(e => e.Id == id);
-            if (e == null)
-                return NoContent();
-            return Ok(e);
+            var res = _context.GetEventById(id);
+            return res == null ? NoContent() : Ok(res);
         }
 
         // POST api/<EventsController>
         [HttpPost]
         public IActionResult Post([FromBody] Event value)
         {
-            _context.Events.Add(new Event(value));
+            _context.AddEvent(value);
             return NoContent();
         }
 
@@ -64,28 +57,14 @@ namespace Web_API_Hall.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Event value)
         {
-            var e = _context.Events.Find(e => e.Id == id);
-            if (e == null)
-            {
-                _context.Events.Add(value);
-                return NotFound();
-            }
-            _context.Events.Remove(e);
-            _context.Events.Add(value);
-            return Ok(value);
+            return _context.UpdateEventById(id, value) ? Ok(value) : NoContent();
         }
 
         // DELETE api/<EventsController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if (_context.Events.Count == 0)
-                return NotFound();
-            var e = _context.Events.Find(e => e.Id == id);
-            if (e == null)
-                return NotFound();
-            _context.Events.Remove(e);
-            return NoContent();
+            return _context.RemoveEventById(id) ? NoContent() : NotFound();
         }
     }
 }

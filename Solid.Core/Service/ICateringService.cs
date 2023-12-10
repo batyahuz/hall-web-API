@@ -11,8 +11,8 @@ namespace Solid.Core.Service
     {
         IEnumerable<Catering> GetAllCaterings(string? text = "");
         IEnumerable<Catering> GetCateringById(int id, string? text = "");
-        IEnumerable<Catering> AddCatering(Catering catering);
-        void UpdateCateringById(IEnumerable<Catering> c, Catering catering);
-        void RemoveCatering(Catering catering);
+        Catering AddCatering(Catering catering);
+        bool UpdateCateringById(int id, Catering catering);
+        bool RemoveCateringById(int id);
     }
 }

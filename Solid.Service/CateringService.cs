@@ -18,9 +18,10 @@ namespace Solid.Service
             _cateringRepository = cateringRepository;
         }
 
-        public IEnumerable<Catering> AddCatering(Catering catering)
+        public Catering AddCatering(Catering catering)
         {
-            throw new NotImplementedException();
+            _cateringRepository.AddCatering(catering);
+            return catering;
         }
 
         public IEnumerable<Catering> GetAllCaterings(string? text = "")
@@ -33,14 +34,14 @@ namespace Solid.Service
             return GetAllCaterings(text).Where(c => c.Id == id);
         }
 
-        public void RemoveCatering(Catering catering)
+        public bool RemoveCateringById(int id)
         {
-            _cateringRepository.GetCaterings().ToList().Find(c => c.Equals(catering));
+            return _cateringRepository.RemoveCatering((Catering)GetCateringById(id));
         }
 
-        public void UpdateCateringById(IEnumerable<Catering> c, Catering catering)
+        public bool UpdateCateringById(int id, Catering catering)
         {
-            throw new NotImplementedException();
+            return _cateringRepository.UpdateCatering((Catering)GetCateringById(id), catering);
         }
     }
 }

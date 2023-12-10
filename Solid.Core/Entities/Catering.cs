@@ -5,7 +5,8 @@ namespace Solid.Core.Entities
     public enum FOOD_TYPE { DAIRY, FLASHIC, PARVE };
     public class Catering
     {
-        private Catering value;
+        //private Catering value;
+        private static int id = 1;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -18,7 +19,7 @@ namespace Solid.Core.Entities
         }
         public Catering(int id, string name, FOOD_TYPE foodType, int priceForPlate = 50)
         {
-            Id = id;
+            Id = Catering.id++;
             Name = name;
             FoodType = foodType;
             PriceForPlate = priceForPlate;

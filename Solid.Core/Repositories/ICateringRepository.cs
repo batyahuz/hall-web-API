@@ -10,5 +10,8 @@ namespace Solid.Core.Repositories
     public interface ICateringRepository
     {
         List<Catering> GetCaterings();
+        bool RemoveCatering(Catering catering);
+        bool UpdateCatering(Catering source,Catering catering);
+        bool AddCatering(Catering catering);
     }
 }

@@ -39,5 +39,9 @@ namespace Solid.Core.Entities
             customer.Events.ForEach(e => this.Events.Add(e));
             this.Status = customer.Status;
         }
+        public override bool Equals(object? obj)
+        {
+            return obj != null && obj.GetType() != this.GetType() && Id == ((Customer)obj).Id;
+        }
     }
 }

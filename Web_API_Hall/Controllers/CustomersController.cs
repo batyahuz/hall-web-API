@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Solid.Core.Entities;
+using Solid.Core.Service;
 using Solid.Data;
 using Web_API_Hall;
 
@@ -11,9 +12,9 @@ namespace WebApWeb_API_Hallplication.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly ICustomerService _context;
 
-        public CustomersController(DataContext context)
+        public CustomersController(ICustomerService context)
         {
             _context = context;
         }
@@ -22,27 +23,22 @@ namespace WebApWeb_API_Hallplication.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            if (_context.Customers.Count == 0)
-                return NoContent();
-            return Ok(_context.Customers);
+            var res = _context.GetAllCustomers();
+            return res == null ? NoContent() : Ok(res);
         }
         // GET api/<CustomersController>/5
         [HttpGet("{phonenum}")]
         public IActionResult Get(string phonenum)
         {
-            if (_context.Customers.Count == 0)
-                return NoContent();
-            var c = _context.Customers.Find(c => c.PhoneNum.Equals(phonenum));
-            if (c == null)
-                return NoContent();
-            return Ok(c);
+            var res = _context.GetCustomerByPhonenum(phonenum);
+            return res == null ? NoContent() : Ok(res);
         }
 
         // POST api/<CustomersController>
         [HttpPost]
         public IActionResult Post([FromBody] Customer value)
         {
-            _context.Customers.Add(new Customer(value));
+            _context.AddCustomer(value);
             return NoContent();
         }
 
@@ -50,28 +46,14 @@ namespace WebApWeb_API_Hallplication.Controllers
         [HttpPut("{phonenum}")]
         public IActionResult Put(string phonenum, [FromBody] Customer value)
         {
-            var c = _context.Customers.Find(c => c.PhoneNum.Equals(phonenum));
-            if (c == null)
-            {
-                _context.Customers.Add(value);
-                return NotFound();
-            }
-            _context.Customers.Remove(c);
-            _context.Customers.Add(value);
-            return Ok(value);
+            return _context.UpdateCustomerByPhonenum(phonenum, value) ? Ok(value) : NoContent();
         }
 
         // DELETE api/<CustomersController>/5
         [HttpPost("{phonenum}/{status}")]
         public IActionResult UpdateStatus(string phonenum, bool status)
         {
-            if (_context.Customers.Count == 0)
-                return NotFound();
-            var c = _context.Customers.Find(c => c.PhoneNum.Equals(phonenum));
-            if (c == null)
-                return NotFound();
-            c.Status = status;
-            return Ok(c);
+            return _context.UpdateCustomerStatusByPhonenum(phonenum, status) ? NoContent() : NotFound();
         }
 
     }
