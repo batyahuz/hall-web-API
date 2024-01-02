@@ -46,14 +46,14 @@ namespace WebApWeb_API_Hallplication.Controllers
         [HttpPut("{phonenum}")]
         public IActionResult Put(string phonenum, [FromBody] Customer value)
         {
-            return _context.UpdateCustomerByPhonenum(phonenum, value) ? Ok(value) : NoContent();
+            return _context.UpdateCustomerByPhonenum(phonenum, value) != null ? Ok(value) : NoContent();
         }
 
         // DELETE api/<CustomersController>/5
         [HttpPost("{phonenum}/{status}")]
         public IActionResult UpdateStatus(string phonenum, bool status)
         {
-            return _context.UpdateCustomerStatusByPhonenum(phonenum, status) ? NoContent() : NotFound();
+            return _context.UpdateCustomerStatusByPhonenum(phonenum, status) != null ? NoContent() : NotFound();
         }
 
     }

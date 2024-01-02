@@ -26,22 +26,24 @@ namespace Solid.Service
 
         public IEnumerable<Catering> GetAllCaterings(string? text = "")
         {
-            return _cateringRepository.GetCaterings().Where(c => c.Name.Contains(text));
+            return _cateringRepository.GetAllCaterings().Where(c => c.Name.Contains(text));
         }
 
-        public IEnumerable<Catering> GetCateringById(int id, string? text = "")
+        public Catering? GetCateringById(int id, string? text = "")
         {
-            return GetAllCaterings(text).Where(c => c.Id == id);
+            var catering = _cateringRepository.GetCateringById(id);
+            return catering != null && catering.Name.Contains(text) ? catering : null;
         }
 
-        public bool RemoveCateringById(int id)
+        public Catering RemoveCateringById(int id)
         {
-            return _cateringRepository.RemoveCatering((Catering)GetCateringById(id));
+            return _cateringRepository.RemoveCatering(id);
         }
 
-        public bool UpdateCateringById(int id, Catering catering)
+        public Catering? UpdateCateringById(int id, Catering catering)
         {
-            return _cateringRepository.UpdateCatering((Catering)GetCateringById(id), catering);
+            var source = GetCateringById(id);
+            return source == null ? null : _cateringRepository.UpdateCatering(source, catering);
         }
     }
 }

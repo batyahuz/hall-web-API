@@ -26,24 +26,24 @@ namespace Solid.Service
 
         public IEnumerable<Event> GetAllEvents(string? text = "")
         {
-            return _eventRepository.GetEvents().Where(c => c.Comments.Contains(text));
+            return _eventRepository.GetAllEvents().Where(c => c.Comments.Contains(text));
         }
 
-        public IEnumerable<Event> GetEventById(int id, string? text = "")
+        public Event? GetEventById(int id, string? text = "")
         {
-            return GetAllEvents(text).Where(c => c.Id == id);
+            return _eventRepository.GetEventById(id);
         }
 
-        public bool RemoveEventById(int id)
+        public Event RemoveEventById(int id)
         {
-            return _eventRepository.RemoveEvent((Event)GetEventById(id));
+            return _eventRepository.RemoveEvent(id);
 
         }
 
-        public bool UpdateEventById(int id, Event eve)
+        public Event? UpdateEventById(int id, Event eve)
         {
-            return _eventRepository.UpdateEvent((Event)GetEventById(id), eve);
-
+            var source = GetEventById(id);
+            return source == null ? null : _eventRepository.UpdateEvent(source, eve);
         }
     }
 }

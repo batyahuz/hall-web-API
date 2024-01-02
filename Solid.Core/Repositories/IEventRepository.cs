@@ -9,9 +9,10 @@ namespace Solid.Core.Repositories
 {
     public interface IEventRepository
     {
-        List<Event> GetEvents();
-        bool RemoveEvent(Event eve);
-        bool UpdateEvent(Event source, Event eve);
-        bool AddEvent(Event eve);
+        public Event AddEvent(Event eve);
+        public IEnumerable<Event> GetAllEvents();
+        public Event? GetEventById(int id);
+        public Event RemoveEvent(int id);
+        public Event UpdateEvent(Event source, Event eve);
     }
 }

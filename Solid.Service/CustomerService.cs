@@ -25,22 +25,25 @@ namespace Solid.Service
 
         public IEnumerable<Customer> GetAllCustomers(string? text = "")
         {
-            return _customerRepository.GetCustomers().Where(c => c.Name.Contains(text));
+            return _customerRepository.GetAllCustomers().Where(c => c.Name.Contains(text));
         }
 
-        public IEnumerable<Customer> GetCustomerByPhonenum(string phonenum, string? text = "")
+        public Customer? GetCustomerByPhonenum(string phonenum, string? text = "")
         {
-            return GetAllCustomers(text).Where(c => c.PhoneNum.Equals(phonenum));
+            return _customerRepository.GetCustomerByPhonenum(phonenum);
         }
 
-        public bool UpdateCustomerByPhonenum(string phonenum, Customer customer)
+        public Customer? UpdateCustomerByPhonenum(string phonenum, Customer customer)
         {
-            return _customerRepository.UpdateCustomer((Customer)GetCustomerByPhonenum(phonenum), customer);
+
+            var cust = GetCustomerByPhonenum(phonenum);
+            return cust == null ? null : _customerRepository.UpdateCustomer(cust, customer);
         }
 
-        public bool UpdateCustomerStatusByPhonenum(string phonenum, bool status)
+        public Customer? UpdateCustomerStatusByPhonenum(string phonenum, bool status)
         {
-            return _customerRepository.UpdateCustomerStatus((Customer)GetCustomerByPhonenum(phonenum), status);
+            var source = GetCustomerByPhonenum(phonenum);
+            return source == null ? null : _customerRepository.UpdateCustomerStatusById(source, status);
         }
     }
 }

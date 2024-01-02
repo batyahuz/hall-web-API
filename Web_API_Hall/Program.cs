@@ -1,5 +1,9 @@
-
+//using Microsoft.EntityFrameworkCore.Design;
+using Solid.Core.Repositories;
+using Solid.Core.Service;
 using Solid.Data;
+using Solid.Data.Repositories;
+using Solid.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +13,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<DataContext>();
+
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICateringRepository, CateringRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICateringService, CateringService>();
+builder.Services.AddScoped<IEventService, EventService>();
+
+builder.Services.AddDbContext<DataContext>();
+//builder.Services.AddSingleton<DataContext>();
 
 var app = builder.Build();
 

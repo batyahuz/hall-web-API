@@ -17,28 +17,45 @@ namespace Solid.Data.Repositories
             _context = context;
         }
 
-        public bool AddCustomer(Customer customer)
+        public Customer AddCustomer(Customer customer)
         {
             _context.Customers.Add(customer);
-            return true;
+            _context.SaveChanges();
+            return customer;
         }
 
-        public List<Customer> GetCustomers()
+        public IEnumerable<Customer> GetAllCustomers()
         {
             return _context.Customers;
         }
 
-        public bool RemoveCustomer(Customer customer)
+        public Customer? GetCustomerByPhonenum(string phonenum)
         {
-            return _context.Customers.Remove(customer);
+            return _context.Customers.Where(c => c.PhoneNum == phonenum)?.First();
         }
 
-        public bool UpdateCustomer(Customer source, Customer customer)
+        public Customer? GetCustomerById(int id)
         {
-            return RemoveCustomer(source) && AddCustomer(customer);
+            return _context.Customers.Find(id);
         }
 
-        public bool UpdateCustomerStatus(Customer customer, bool status)
+        public Customer RemoveCustomer(int id)
+        {
+            var customer = GetCustomerById(id);
+            _context.Customers.Remove(customer);
+            _context.SaveChanges();
+            return customer;
+        }
+
+        public Customer UpdateCustomer(Customer source, Customer customer)
+        {
+            _context.Customers.Remove(source);
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
+            return customer;
+        }
+
+        public Customer UpdateCustomerStatusById(Customer customer, bool status)
         {
             var c = new Customer(customer);
             c.Status = status;

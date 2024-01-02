@@ -9,10 +9,12 @@ namespace Solid.Core.Repositories
 {
     public interface ICustomerRepository
     {
-        List<Customer> GetCustomers();
-        bool UpdateCustomer(Customer source, Customer customer);
-        bool AddCustomer(Customer customer);
-        bool RemoveCustomer(Customer customer);
-        bool UpdateCustomerStatus(Customer customer, bool status);
+        public Customer AddCustomer(Customer customer);
+        public IEnumerable<Customer> GetAllCustomers();
+        public Customer? GetCustomerByPhonenum(string phonenum);
+        public Customer? GetCustomerById(int id);
+        public Customer RemoveCustomer(int id);
+        public Customer UpdateCustomer(Customer source, Customer customer);
+        public Customer UpdateCustomerStatusById(Customer customer, bool status);
     }
 }

@@ -10,9 +10,9 @@ namespace Solid.Core.Service
     public interface ICateringService
     {
         IEnumerable<Catering> GetAllCaterings(string? text = "");
-        IEnumerable<Catering> GetCateringById(int id, string? text = "");
+        Catering? GetCateringById(int id, string? text = "");
         Catering AddCatering(Catering catering);
-        bool UpdateCateringById(int id, Catering catering);
-        bool RemoveCateringById(int id);
+        Catering RemoveCateringById(int id);
+        Catering? UpdateCateringById(int id, Catering catering);
     }
 }

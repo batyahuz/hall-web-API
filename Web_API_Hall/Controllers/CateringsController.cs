@@ -44,14 +44,14 @@ namespace Solid.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Catering value)
         {
-            return _context.UpdateCateringById(id, value) ? Ok(value) : NoContent();
+            return _context.UpdateCateringById(id, value) != null ? Ok(value) : NoContent();
         }
 
         // DELETE api/<CateringsController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return _context.RemoveCateringById(id) ? NoContent() : NotFound();
+            return _context.RemoveCateringById(id) != null ? NoContent() : NotFound();
         }
     }
 }

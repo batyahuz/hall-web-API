@@ -9,10 +9,10 @@ namespace Solid.Core.Service
 {
     public interface ICustomerService
     {
-        IEnumerable<Customer> GetAllCustomers(string? text = "");
-        IEnumerable<Customer> GetCustomerByPhonenum(string phonenum, string? text = "");
-        Customer AddCustomer(Customer customer);
-        bool UpdateCustomerByPhonenum(string phonenum, Customer customer);
-        bool UpdateCustomerStatusByPhonenum(string phonenum, bool status);
+        public Customer AddCustomer(Customer customer);
+        public IEnumerable<Customer> GetAllCustomers(string? text = "");
+        public Customer? GetCustomerByPhonenum(string phonenum, string? text = "");
+        public Customer? UpdateCustomerByPhonenum(string phonenum, Customer customer);
+        public Customer? UpdateCustomerStatusByPhonenum(string phonenum, bool status);
     }
 }

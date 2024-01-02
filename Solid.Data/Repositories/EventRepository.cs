@@ -17,25 +17,39 @@ namespace Solid.Data.Repositories
             _context = context;
         }
 
-        public bool AddEvent(Event eve)
+        public Event AddEvent(Event eve)
         {
             _context.Events.Add(eve);
-            return true;
+            _context.SaveChanges();
+            return eve;
         }
 
-        public List<Event> GetEvents()
+        public IEnumerable<Event> GetAllEvents()
         {
             return _context.Events;
         }
 
-        public bool RemoveEvent(Event eve)
+        public Event? GetEventById(int id)
         {
-            return _context.Events.Remove(eve);
+            return _context.Events.Find(id);
         }
 
-        public bool UpdateEvent(Event source, Event eve)
+        public Event RemoveEvent(int id)
         {
-            return RemoveEvent(source) && AddEvent(eve);
+            var e = GetEventById(id);
+            _context.Events.Remove(e);
+            _context.SaveChanges();
+            return e;
+        }
+
+        public Event UpdateEvent(Event source, Event eve)
+        {
+            //var e = _context.Events.Find(source.Id);
+            //_context.Events.Update(source);
+            _context.Events.Remove(source);
+            _context.Events.Add(eve);
+            _context.SaveChanges();
+            return eve;
         }
     }
 }

@@ -16,25 +16,37 @@ namespace Solid.Data.Repositories
         {
             _context = context;
         }
-        public bool AddCatering(Catering catering)
+        public Catering AddCatering(Catering catering)
         {
             _context.Caterings.Add(catering);
-            return true;
+            _context.SaveChanges();
+            return catering;
         }
 
-        public List<Catering> GetCaterings()
+        public IEnumerable<Catering> GetAllCaterings()
         {
             return _context.Caterings;
         }
 
-        public bool RemoveCatering(Catering catering)
+        public Catering? GetCateringById(int id)
         {
-            return _context.Caterings.Remove(catering);
+            return _context.Caterings.Find(id);
         }
 
-        public bool UpdateCatering(Catering source, Catering catering)
+        public Catering RemoveCatering(int id)
         {
-            return RemoveCatering(source) && AddCatering(catering);
+            var catering = GetCateringById(id);
+            _context.Caterings.Remove(catering);
+            _context.SaveChanges();
+            return catering;
+        }
+
+        public Catering UpdateCatering(Catering source, Catering catering)
+        {
+            _context.Caterings.Remove(source);
+            _context.Caterings.Add(catering);
+            _context.SaveChanges();
+            return catering;
         }
     }
 }

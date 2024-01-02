@@ -9,9 +9,10 @@ namespace Solid.Core.Repositories
 {
     public interface ICateringRepository
     {
-        List<Catering> GetCaterings();
-        bool RemoveCatering(Catering catering);
-        bool UpdateCatering(Catering source,Catering catering);
-        bool AddCatering(Catering catering);
+        public Catering AddCatering(Catering catering);
+        public IEnumerable<Catering> GetAllCaterings();
+        public Catering? GetCateringById(int id);
+        public Catering RemoveCatering(int id);
+        public Catering UpdateCatering(Catering source, Catering catering);
     }
 }

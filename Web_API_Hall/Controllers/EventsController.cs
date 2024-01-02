@@ -57,14 +57,14 @@ namespace Web_API_Hall.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Event value)
         {
-            return _context.UpdateEventById(id, value) ? Ok(value) : NoContent();
+            return _context.UpdateEventById(id, value) != null ? Ok(value) : NoContent();
         }
 
         // DELETE api/<EventsController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return _context.RemoveEventById(id) ? NoContent() : NotFound();
+            return _context.RemoveEventById(id) != null ? NoContent() : NotFound();
         }
     }
 }

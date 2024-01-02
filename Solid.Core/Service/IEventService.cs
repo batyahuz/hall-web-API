@@ -9,10 +9,10 @@ namespace Solid.Core.Service
 {
     public interface IEventService
     {
-        IEnumerable<Event> GetAllEvents(string? text = "");
-        IEnumerable<Event> GetEventById(int id, string? text = "");
-        Event AddEvent(Event eve);
-        bool UpdateEventById(int id, Event eve);
-        bool RemoveEventById(int id);
+        public Event AddEvent(Event eve);
+        public IEnumerable<Event> GetAllEvents(string? text = "");
+        public Event? GetEventById(int id, string? text = "");
+        public Event RemoveEventById(int id);
+        public Event? UpdateEventById(int id, Event eve);
     }
 }
